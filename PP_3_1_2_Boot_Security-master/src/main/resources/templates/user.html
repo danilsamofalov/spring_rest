@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>userHomePage</title>
+    <style>
+        .block-left {
+            width: 10%;
+            float: left;
+        }
+
+        .block-right {
+            width: 90%;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+  <span class="navbar-brand">
+            <b> <span class="align-middle" th:text="${activeUser.username}"></span></b>
+            <span class="align-middle">with role:</span>
+            <span class="align-middle" >USER</span>
+  </span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
+        </form>
+    </div>
+</nav>
+<div class="block-left">
+    <nav class="nav flex-column nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user">User</a>
+        </li>
+    </nav>
+</div>
+<div class="block-right">
+    <header><h4> &nbsp;User Information Page</h4>
+    </header>
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+            <h5 class="card-header">About User</h5>
+
+            <table class="table table-hover">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>LastName</th>
+                    <th>Salary</th>
+                </tr>
+                <tbody>
+                <div th:each="user : ${activeUser}">
+                    <tr>
+                        <td th:utext="${activeUser.getId}"></td>
+                        <td th:text="${activeUser.getUsername()}"></td>
+                        <td th:text="${activeUser.getLastName()}"></td>
+                        <td th:text="${activeUser.getSalary()}"></td>
+                    </tr>
+
+                </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </br>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
