@@ -20,18 +20,12 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-  <span class="navbar-brand">
-    <b> <span class="align-middle" >Admin</span>
-    </b>
-            <span class="align-middle"> with roles: USER, ADMIN</span>
-
-  </span>
+<nav class="navbar navbar-dark bg-dark" style="display: block; color: white">
+    <a id="myUserDetails"  class="navbar-brand">
+    </a>
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn btn-dark text-secondary">Logout</button>
-        </form>
-    </div>
+    </form>
 </nav>
 <div class="block-left">
     <div class="d-flex align-items-start">
