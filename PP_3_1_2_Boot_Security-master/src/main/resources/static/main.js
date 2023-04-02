@@ -191,9 +191,9 @@ async function deleteUser() {
         getAdminPage();
     })
 }
-function userNavbarDetails({email, roles}) {
+function userNavbarDetails({username, roles}) {
     const userList = document.getElementById('myUserDetails');
     userList.insertAdjacentHTML('beforeend', `
-        <b> ${email} </b> with roles: <a>${roles} </a> 
+        <b> ${username} </b> with roles: <a>${roles} </a> 
     `);
 }
