@@ -9,8 +9,15 @@ async function getAdminPage() {
     } else {
         alert(`Error, ${page.status}`)
     }
+
 }
-console.log("Hello");
+async function getMyUser() {
+
+    const res = await fetch('http://localhost:8080/admin/users')
+    const resUser = await res.json();
+    userNavbarDetails(resUser);
+}
+window.addEventListener('DOMContentLoaded', getMyUser);
 function loadTableData(listAllUser) {
     const tableBody = document.getElementById('tbody');
     let dataHtml = '';
@@ -183,4 +190,10 @@ async function deleteUser() {
         $('#deleteCloseBtn').click();
         getAdminPage();
     })
+}
+function userNavbarDetails({email, roles}) {
+    const userList = document.getElementById('myUserDetails');
+    userList.insertAdjacentHTML('beforeend', `
+        <b> ${email} </b> with roles: <a>${roles} </a> 
+    `);
 }
