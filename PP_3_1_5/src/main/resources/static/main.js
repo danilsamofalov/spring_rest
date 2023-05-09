@@ -9,22 +9,62 @@ async function getAdminPage() {
         alert(`Error, ${page.status}`)
     }
 }
+
+async function getUserPage() {
+    let page = await fetch(url);
+    if (page.ok) {
+        let listAllUser = await page.json();
+        loadUserTable(listAllUser);
+    } else {
+        alert(`Error, ${page.status}`)
+    }
+}
+
+const pills = document.querySelectorAll('.pill');
+const pillsContent = document.querySelectorAll('.pillContent');
+pills.forEach((clickedPill) => {
+    clickedPill.addEventListener('click', async () => {
+        pills.forEach((pill) => {
+            pill.classList.remove('active');
+        });
+        clickedPill.classList.add('active');
+        let tabId = clickedPill.getAttribute('id');
+        await activeTabContent(tabId);
+    });
+});
+
+async function activeTabContent(tabId) {
+    pillsContent.forEach((clickedPillContent) => {
+        clickedPillContent.classList.contains(tabId) ?
+            clickedPillContent.classList.add('active') :
+            clickedPillContent.classList.remove('active');
+    })
+}
+
+async function setCurrentUser() {
+    let currentUserUsername = document.getElementById('login-username').value;
+}
+
 async function getMyUser() {
-    const res = await fetch('http://localhost:8080/admin/users');
-    const resUser = await res.json();
+    let res = await fetch('http://localhost:8080/admin/users');
+    let resUser = await res.json();
     userNavbarDetails(resUser);
 }
 
 window.addEventListener('DOMContentLoaded', getMyUser);
 
-function userNavbarDetails({username = 'admin@mail.ru', roles = 'ADMIN, USER'}) {
-    const userList = document.getElementById('myUserDetails');
+function userNavbarDetails(resUser) {
+    let userList = document.getElementById('myUserDetails');
+    let roles = ''
+    for (let role of resUser[1].roles) {
+        roles += role.name + ' '
+    }
     userList.insertAdjacentHTML('beforeend', `
-        <b> ${username} </b> with roles: <a>${roles} </a>`);
+        <b> ${resUser[1].username} </b> with roles: <a>${roles} </a>`);
 }
 
 function loadTableData(listAllUser) {
-    const tableBody = document.getElementById('tbody');
+    let tableBody = document.getElementById('tbody');
     let dataHtml = '';
     for (let user of listAllUser) {
         let roles = [];
@@ -55,6 +95,27 @@ function loadTableData(listAllUser) {
 }
 
 getAdminPage();
+
+function loadUserTable(listAllUser) {
+    let tableBody = document.getElementById('tableUser');
+    let dataHtml = '';
+    let roles = [];
+    for (let role of listAllUser[1].roles) {
+        roles.push(" " + role.name)
+    }
+    dataHtml +=
+        `<tr>
+    <td>${listAllUser[1].id}</td>
+    <td>${listAllUser[1].firstName}</td>
+    <td>${listAllUser[1].lastName}</td>
+    <td>${listAllUser[1].age}</td>
+    <td>${listAllUser[1].username}</td>
+    <td>${roles}</td>
+</tr>`
+    tableBody.innerHTML = dataHtml;
+}
+
+getUserPage();
 
 const form_new = document.getElementById('formForNewUser');
 
@@ -195,5 +256,6 @@ async function deleteUser() {
         getAdminPage();
     })
 }
+
 
 

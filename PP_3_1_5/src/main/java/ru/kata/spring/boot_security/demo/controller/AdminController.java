@@ -56,7 +56,6 @@ public class AdminController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
     private User convertToUser(UserDto userDto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(userDto, User.class);

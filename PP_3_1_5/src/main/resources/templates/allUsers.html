@@ -18,68 +18,94 @@
     </div>
 </nav>
 
-<div class="block-left custom-col-left nav nav-pills flex-column back-white" id="v-pills-tab" role="tablist">
-    <b class="nav-link active pill" id="v-pills-admin-tab" data-bs-toggle="pill"
-       data-bs-target="#v-pills-admin" type="button" role="tab" aria-controls="v-pills-home"
-       aria-selected="true">Admin
-    </b>
-    <b class="nav-link pill" id="v-pills-user-tab" data-bs-toggle="pill"
-       data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user"
-       aria-selected="false">User
-    </b>
-</div>
+<div>
+    <div class="block-left custom-col-left nav nav-pills flex-column back-white" id="v-pills-tab" role="tablist">
+        <b class="nav-link active pill" id="v-pills-admin-tab" data-bs-toggle="pill"
+           data-bs-target="#v-pills-admin" type="button" role="tab" aria-controls="v-pills-admin"
+           aria-selected="true">Admin
+        </b>
+        <b class="nav-link pill" id="v-pills-user-tab" data-bs-toggle="pill"
+           data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user"
+           aria-selected="false">User
+        </b>
+    </div>
 
-    <div class="block-right section">
-        <div class="tab-content custom-tabs" id="v-pills-tabContent">
+    <div class="tab-content custom-tabs block-right section" id="v-pills-tabContent">
 
-            <div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel"
-                 aria-labelledby="v-pills-admin-tab"
-                 tabindex="0">
-                <h2>Admin panel</h2>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                                type="button"
-                                role="tab" aria-controls="home" aria-selected="true">Users Table
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                type="button"
-                                role="tab" aria-controls="profile" aria-selected="false" onclick="newUser()">New User
-                        </button>
-                    </li>
-                </ul>
+        <div class="tab-pane fade show active pillContent v-pills-admin-tab" id="v-pills-admin" role="tabpanel"
+             aria-labelledby="v-pills-admin-tab" tabindex="0">
+            <h2>Admin panel</h2>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button"
+                            role="tab" aria-controls="home" aria-selected="true">Users Table
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button"
+                            role="tab" aria-controls="profile" aria-selected="false" onclick="newUser()">New User
+                    </button>
+                </li>
+            </ul>
 
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="card" style="width: 100%;">
-                            <div class="card-body">
-                                <h5 class="card-header">All Users</h5>
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Age</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Role</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="tbody">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                     aria-labelledby="home-tab">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-header">All Users</h5>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody">
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="tab-pane fade show pillContent v-pills-user-tab" id="v-pills-user" role="tabpanel"
+             aria-labelledby="v-pills-user-tab"
+             tabindex="0">
+            <h2>About User</h2>
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableUser">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -89,14 +115,14 @@
             </div>
             <div class="modal-body text-center d-flex justify-content-center">
                 <form id="formForEditing">
-                    <label for="id_ed" class="col-form-label"><strong>Id</strong></label>
+                    <label for="id_ed" class="col-form-label">Id</label>
                     <input id="id_ed" type="text" readonly="readonly" name="editedUserId" class="form-control">
                     <div class="form-group mt-4">
-                        <label for="firstName_ed" class="col-form-label"><strong>First Name</strong></label>
+                        <label for="firstName_ed" class="col-form-label">First Name</label>
                         <input id="firstName_ed" type="text" class="form-control" name="firstName">
                     </div>
                     <div class="form-group mt-4">
-                        <label for="lastName_ed" class="col-form-label"><strong>Last name</<strong></label>
+                        <label for="lastName_ed" class="col-form-label">Last name</label>
                         <input id="lastName_ed" type="text" class="form-control" name="lastName">
                     </div>
                     <div class="form-group mt-4">

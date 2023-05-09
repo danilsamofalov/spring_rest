@@ -16,7 +16,7 @@
 
 .section {
     margin-top: 20px;
-    padding: 0 30px;
+    padding-right: 70px;
 }
 
 .pill {
@@ -50,7 +50,7 @@ b {
 }
 
 .form-control, .form-select {
-    width: calc(20vw) !important
+    width: calc(16vw) !important
 }
 
 .form-sign {
@@ -65,4 +65,8 @@ b {
 .block-right {
     width: 88%;
     float: right;
+}
+
+label {
+    font-weight: bold;
 }
