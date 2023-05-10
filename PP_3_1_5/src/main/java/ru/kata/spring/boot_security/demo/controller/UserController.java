@@ -31,12 +31,6 @@ public class UserController {
         model.addAttribute("activeUser", userService.findByUsername(principal.getName()));
         return "user";
     }
-//    @GetMapping("/user")
-//    public ModelAndView showUserInfo() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("user");
-//        return modelAndView;
-//    }
     @GetMapping(value = "/index")
     public String index() {
         return "allUsers";
