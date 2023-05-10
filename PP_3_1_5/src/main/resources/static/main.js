@@ -1,3 +1,5 @@
+"use strict";
+
 const url = "http://localhost:8080/admin/users"
 
 async function getAdminPage() {
@@ -11,10 +13,10 @@ async function getAdminPage() {
 }
 
 async function getUserPage() {
-    let page = await fetch(url);
+    let page = await fetch("/api/auth");
     if (page.ok) {
-        let listAllUser = await page.json();
-        loadUserTable(listAllUser);
+        let currentUser = await page.json();
+        loadUserTable(currentUser);
     } else {
         alert(`Error, ${page.status}`)
     }
@@ -41,12 +43,8 @@ async function activeTabContent(tabId) {
     })
 }
 
-async function setCurrentUser() {
-    let currentUserUsername = document.getElementById('login-username').value;
-}
-
 async function getMyUser() {
-    let res = await fetch('http://localhost:8080/admin/users');
+    let res = await fetch('/api/auth');
     let resUser = await res.json();
     userNavbarDetails(resUser);
 }
@@ -56,11 +54,11 @@ window.addEventListener('DOMContentLoaded', getMyUser);
 function userNavbarDetails(resUser) {
     let userList = document.getElementById('myUserDetails');
     let roles = ''
-    for (let role of resUser[1].roles) {
+    for (let role of resUser.roles) {
         roles += role.name + ' '
     }
     userList.insertAdjacentHTML('beforeend', `
-        <b> ${resUser[1].username} </b> with roles: <a>${roles} </a>`);
+        <b> ${resUser.username} </b> with roles: <a>${roles} </a>`);
 }
 
 function loadTableData(listAllUser) {
@@ -96,20 +94,20 @@ function loadTableData(listAllUser) {
 
 getAdminPage();
 
-function loadUserTable(listAllUser) {
+function loadUserTable(currentUser) {
     let tableBody = document.getElementById('tableUser');
     let dataHtml = '';
     let roles = [];
-    for (let role of listAllUser[1].roles) {
+    for (let role of currentUser.roles) {
         roles.push(" " + role.name)
     }
     dataHtml +=
         `<tr>
-    <td>${listAllUser[1].id}</td>
-    <td>${listAllUser[1].firstName}</td>
-    <td>${listAllUser[1].lastName}</td>
-    <td>${listAllUser[1].age}</td>
-    <td>${listAllUser[1].username}</td>
+    <td>${currentUser.id}</td>
+    <td>${currentUser.firstName}</td>
+    <td>${currentUser.lastName}</td>
+    <td>${currentUser.age}</td>
+    <td>${currentUser.username}</td>
     <td>${roles}</td>
 </tr>`
     tableBody.innerHTML = dataHtml;

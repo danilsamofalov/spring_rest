@@ -12,9 +12,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
   <span class="navbar-brand">
-            <b> <span class="align-middle" th:text="${activeUser.username}"></span></b>
-            <span class="align-middle">with role:</span>
-            <span class="align-middle">USER</span>
+      <b> <span class="align-middle" th:text="${activeUser.username}"></span></b>
+      <span class="align-middle">with role:</span>
+      <span th:each="role: ${activeUser.roles}">
+          <b class="text-light" th:utext="${role.name}"></b>
+      </span>
   </span>
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn btn-dark text-secondary">Logout</button>
@@ -46,21 +48,18 @@
                         <th scope="col">Role</th>
                     </tr>
                     <tbody>
-                    <div th:each="user : ${activeUser}">
-                        <tr>
-                            <td th:utext="${activeUser.getId}"></td>
-                            <td th:text="${activeUser.getFirstName()}"></td>
-                            <td th:text="${activeUser.getLastName()}"></td>
-                            <td th:text="${activeUser.getAge()}"></td>
-                            <td th:text="${activeUser.getUsername()}"></td>
-                            <td>
-                                <th:block th:each="role: ${user.roles}">
-                                    <a th:utext="${role.name}"></a>
-                                </th:block>
-                            </td>
-                        </tr>
-
-                    </div>
+                    <tr>
+                        <td th:text="${activeUser.id}"></td>
+                        <td th:text="${activeUser.firstName}"></td>
+                        <td th:text="${activeUser.lastName}"></td>
+                        <td th:text="${activeUser.age}"></td>
+                        <td th:text="${activeUser.username}"></td>
+                        <td>
+                            <th:block th:each="role: ${activeUser.roles}">
+                                <a th:utext="${role.name}"></a>
+                            </th:block>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

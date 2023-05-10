@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -108,6 +109,9 @@ public class User implements UserDetails {
             sb.append(" ");
         }
         return sb.toString();
+    }
+    public String roleToString() {
+        return roles.stream().map(Object::toString).collect(Collectors.joining(", "));
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
