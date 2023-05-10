@@ -50,7 +50,8 @@ b {
 }
 
 .form-control, .form-select {
-    width: calc(16vw) !important
+    width: calc(20vw) !important;
+    align-self: center
 }
 
 .form-sign {

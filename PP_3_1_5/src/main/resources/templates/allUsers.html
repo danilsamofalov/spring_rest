@@ -26,7 +26,7 @@
         </b>
         <b class="nav-link pill" id="v-pills-user-tab" data-bs-toggle="pill"
            data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user"
-           aria-selected="false">User
+           aria-selected="false" onclick="loadUserTable()">User
         </b>
     </div>
 
@@ -36,27 +36,27 @@
              aria-labelledby="v-pills-admin-tab" tabindex="0">
             <h2>Admin panel</h2>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                            type="button"
-                            role="tab" aria-controls="home" aria-selected="true">Users Table
+                <li class="nav-item active" role="tab">
+                    <button class="nav-link active taba" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">
+                        Users Table
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                            type="button"
-                            role="tab" aria-controls="profile" aria-selected="false" onclick="newUser()">New User
+                <li class="nav-item" role="tab">
+                    <button class="nav-link taba" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false" onclick="newUser()"
+                    >New User
                     </button>
                 </li>
             </ul>
 
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                <div class="tab-pane fade show tabaContent home-tab active" id="home" role="tabpanel"
                      aria-labelledby="home-tab">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                             <h5 class="card-header">All Users</h5>
-                            <table class="table table-hover">
+                            <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -76,6 +76,50 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="tab-pane fade show border tabaContent profile-tab" id="profile" role="tabpanel"
+                     aria-labelledby="profile-tab">
+                    <div class="card" style="width: 100%;">
+                        <h5 class="card-header">New user</h5>
+                        <div class="card-body d-flex justify-content-center text-center">
+                            <form id="formForNewUser">
+                                <div class="form-group">
+                                    <label for="firstname" class="col-form-label">First Name</label>
+                                    <input id="firstname" type="text" class="form-control" name="firstName">
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label for="lastName" class="col-form-label">Last name</label>
+                                    <input id="lastName" type="text" class="form-control" name="lastName">
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label for="age" class="col-form-label">Age</label>
+                                    <input id="age" type="number" class="form-control" name="age">
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label for="username" class="col-form-label">Email</label>
+                                    <input id="username" type="email" class="form-control" name="username">
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label for="password" class="col-form-label">Password</label>
+                                    <input id="password" type="text" class="form-control" name="password">
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label class="row font-weight-bold justify-content-center"
+                                           for="roleSelect">Role</label>
+                                    <select multiple class="form-control" size="2" id="roleSelect"
+                                            name="roles">
+
+                                        <option id="roleNewUser" value="USER">USER</option>
+                                        <option id="roleNewAdmin" value="ADMIN">ADMIN</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg mt-3" id="signup-submit"
+                                        form="formForNewUser">Add new user
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -85,7 +129,7 @@
             <h2>About User</h2>
             <div class="card" style="width: 100%;">
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -203,52 +247,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">New user</h4>
-            </div>
-            <div class="modal-body text-center d-flex justify-content-center">
-                <form id="formForNewUser">
-                    <div class="form-group">
-                        <label for="firstname" class="col-form-label">First Name</label>
-                        <input id="firstname" type="text" class="form-control" name="firstName">
-                    </div>
-                    <div class="form-group mt-4">
-                        <label for="lastName" class="col-form-label">Last name</label>
-                        <input id="lastName" type="text" class="form-control" name="lastName">
-                    </div>
-                    <div class="form-group mt-4">
-                        <label for="age" class="col-form-label">Age</label>
-                        <input id="age" type="number" class="form-control" name="age">
-                    </div>
-                    <div class="form-group mt-4">
-                        <label for="username" class="col-form-label">Email</label>
-                        <input id="username" type="email" class="form-control" name="username">
-                    </div>
-                    <div class="form-group mt-4">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input id="password" type="text" class="form-control" name="password">
-                    </div>
-                    <div class="form-group mt-4">
-                        <label class="row font-weight-bold justify-content-center" for="roleSelect">Role</label>
-                        <select multiple class="form-control" size="2" id="roleSelect" name="roles">
 
-                            <option id="roleNewUser" value="USER">USER</option>
-                            <option id="roleNewAdmin" value="ADMIN">ADMIN</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success btn-lg" id="signup-submit" form="formForNewUser"
-                        onclick="newUser()">Add new user
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

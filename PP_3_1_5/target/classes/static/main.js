@@ -12,16 +12,6 @@ async function getAdminPage() {
     }
 }
 
-async function getUserPage() {
-    let page = await fetch("/api/auth");
-    if (page.ok) {
-        let currentUser = await page.json();
-        loadUserTable(currentUser);
-    } else {
-        alert(`Error, ${page.status}`)
-    }
-}
-
 const pills = document.querySelectorAll('.pill');
 const pillsContent = document.querySelectorAll('.pillContent');
 pills.forEach((clickedPill) => {
@@ -31,11 +21,11 @@ pills.forEach((clickedPill) => {
         });
         clickedPill.classList.add('active');
         let tabId = clickedPill.getAttribute('id');
-        await activeTabContent(tabId);
+        await activePillContent(tabId);
     });
 });
 
-async function activeTabContent(tabId) {
+async function activePillContent(tabId) {
     pillsContent.forEach((clickedPillContent) => {
         clickedPillContent.classList.contains(tabId) ?
             clickedPillContent.classList.add('active') :
@@ -94,8 +84,15 @@ function loadTableData(listAllUser) {
 
 getAdminPage();
 
-function loadUserTable(currentUser) {
+async function loadUserTable() {
     let tableBody = document.getElementById('tableUser');
+    let page = await fetch("/api/auth");
+    let currentUser;
+    if (page.ok) {
+        currentUser = await page.json();
+    } else {
+        alert(`Error, ${page.status}`)
+    }
     let dataHtml = '';
     let roles = [];
     for (let role of currentUser.roles) {
@@ -113,19 +110,35 @@ function loadUserTable(currentUser) {
     tableBody.innerHTML = dataHtml;
 }
 
-getUserPage();
+const tabs = document.querySelectorAll('.taba');
+const tabsContent = document.querySelectorAll('.tabaContent');
+tabs.forEach((clickedTab) => {
+    clickedTab.addEventListener('click', async () => {
+        tabs.forEach((tab) => {
+            tab.classList.remove('active');
+        });
+        clickedTab.classList.add('active');
+        let tabaId = clickedTab.getAttribute('id');
+        await activeTabContent(tabaId);
+    });
+});
+
+async function activeTabContent(tabaId) {
+    tabsContent.forEach((clickedTabContent) => {
+        clickedTabContent.classList.contains(tabaId) ?
+            clickedTabContent.classList.add('active') :
+            clickedTabContent.classList.remove('active');
+    })
+}
 
 const form_new = document.getElementById('formForNewUser');
 
 async function newUser() {
-    $('#newModal').modal('show');
     form_new.addEventListener('submit', addNewUser);
-    $('#newModal').modal('hide');
 }
 
 async function addNewUser(event) {
     event.preventDefault();
-    const urlNew = 'http://localhost:8080/admin/users';
     let listOfRole = [];
     for (let i = 0; i < form_new.roleSelect.options.length; i++) {
         if (form_new.roleSelect.options[i].selected) {
@@ -146,9 +159,14 @@ async function addNewUser(event) {
             roles: listOfRole
         })
     }
-    await fetch(urlNew, method).then(() => {
+    await fetch(url, method).then(() => {
         form_new.reset();
         getAdminPage();
+        activeTabContent('home-tab');
+        let activateTab = document.getElementById('home-tab');
+        activateTab.classList.add('active');
+        let deactivateTab = document.getElementById('profile-tab');
+        deactivateTab.classList.remove('active');
     });
 }
 
