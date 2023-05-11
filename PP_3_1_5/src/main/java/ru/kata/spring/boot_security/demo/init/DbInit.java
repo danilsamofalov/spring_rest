@@ -21,8 +21,8 @@ public class DbInit {
     }
     @PostConstruct
     private void postConstruct() {
-        Role roleAdmin = new Role("ADMIN");
-        Role roleUser = new Role("USER");
+        Role roleAdmin = new Role((long)1,"ADMIN");
+        Role roleUser = new Role( (long)2,"USER");
         roleService.addRole(roleAdmin);
         roleService.addRole(roleUser);
 

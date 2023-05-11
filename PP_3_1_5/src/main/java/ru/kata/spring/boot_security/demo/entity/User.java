@@ -1,4 +1,5 @@
 package ru.kata.spring.boot_security.demo.entity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -6,17 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "username", unique = true)
     private String username;
     @Column
@@ -25,12 +26,11 @@ public class User implements UserDetails {
     private String firstName;
     @Column
     private String lastName;
-
     @Column
     private int age;
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_name"))
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -45,11 +45,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -73,8 +73,8 @@ public class User implements UserDetails {
         return this.age;
     }
 
-    public void setAge(int salary) {
-        this.age = salary;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
 

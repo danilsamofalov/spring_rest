@@ -2,12 +2,11 @@ package ru.kata.spring.boot_security.demo.dto;
 
 import ru.kata.spring.boot_security.demo.entity.Role;
 
-import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
 public class UserDto {
-    private long id;
+    private Long id;
     private String username;
     private String password;
     private String firstName;
@@ -18,7 +17,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(long id, String username, String password, String firstName, String lastName, int age, Set<Role> roles) {
+    public UserDto(Long id, String username, String password, String firstName, String lastName, int age, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -28,11 +27,11 @@ public class UserDto {
         this.roles = roles;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,7 +75,7 @@ public class UserDto {
         this.age = age;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
@@ -89,7 +88,7 @@ public class UserDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDto userDto = (UserDto) o;
-        return id == userDto.id && age == userDto.age && Objects.equals(username, userDto.username) && Objects.equals(password, userDto.password) && Objects.equals(firstName, userDto.firstName) && Objects.equals(lastName, userDto.lastName) && Objects.equals(roles, userDto.roles);
+        return Objects.equals(id, userDto.id) && age == userDto.age && Objects.equals(username, userDto.username) && Objects.equals(password, userDto.password) && Objects.equals(firstName, userDto.firstName) && Objects.equals(lastName, userDto.lastName) && Objects.equals(roles, userDto.roles);
     }
 
     @Override

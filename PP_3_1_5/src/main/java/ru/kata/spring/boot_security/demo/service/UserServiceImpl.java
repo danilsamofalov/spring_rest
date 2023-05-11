@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,15 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.entity.Role;
+import ru.kata.spring.boot_security.demo.dto.UserDto;
 import ru.kata.spring.boot_security.demo.entity.User;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -40,11 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException(String.format("User" + username + "not found"));
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                mapRolesToAuthority(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesToAuthority(Collection<Role> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+               user.getAuthorities());
     }
 
     @Override
@@ -53,7 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getUserById(long id) {
+    public User getUserById(Long id) {
         return userRepository.getById(id);
     }
 
@@ -67,13 +63,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void removeUser(long id) {
+    public void removeUser(Long id) {
         userRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public void updateUser(long id, User user) {
+    public void updateUser(Long id, User user) {
         Optional<User> updateUser = userRepository.findById(id);
         if (updateUser.isPresent()) {
             User userRep = updateUser.get();
@@ -88,5 +84,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             throw new UsernameNotFoundException(String.format("User is not found"));
         }
+    }
+    @Override
+    @Transactional
+    public User convertToUser(UserDto userDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(userDto, User.class);
     }
 }

@@ -1,5 +1,8 @@
 package ru.kata.spring.boot_security.demo.configs;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,7 +15,10 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.util.Collections;
 
 
 @Configuration
@@ -70,5 +76,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         daoProvider.setUserDetailsService((UserDetailsService) userService);
         return daoProvider;
     }
-
+    @Bean
+    public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenHttpMethodFilter() {
+        FilterRegistrationBean<HiddenHttpMethodFilter> filterRegistrationBean =
+                new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
+        filterRegistrationBean.setUrlPatterns(Collections.singletonList("/*"));
+        return filterRegistrationBean;
+    }
 }
