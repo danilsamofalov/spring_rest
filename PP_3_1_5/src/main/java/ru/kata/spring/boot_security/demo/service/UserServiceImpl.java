@@ -1,23 +1,19 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
 import ru.kata.spring.boot_security.demo.entity.User;
-import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -40,7 +36,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException(String.format("User" + username + "not found"));
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-               user.getAuthorities());
+                user.getAuthorities());
     }
 
     @Override
@@ -69,22 +65,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void updateUser(Long id, User user) {
-        Optional<User> updateUser = userRepository.findById(id);
-        if (updateUser.isPresent()) {
-            User userRep = updateUser.get();
-            userRep.setId(id);
-            userRep.setUsername(user.getUsername());
-            userRep.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRep.setFirstName(user.getFirstName());
-            userRep.setLastName(user.getLastName());
-            userRep.setAge(user.getAge());
-            userRep.setRoles(user.getRoles());
-            userRepository.save(userRep);
-        } else {
-            throw new UsernameNotFoundException(String.format("User is not found"));
-        }
+    public void updateUser(User user) {
+        userRepository.save(user);
     }
+
     @Override
     @Transactional
     public User convertToUser(UserDto userDto) {

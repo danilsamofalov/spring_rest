@@ -46,8 +46,8 @@ public class AdminController {
     }
 
     @PatchMapping(value = "/users/{id}")
-    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto, @PathVariable("id") Long oldUserId) {
-        userService.updateUser(oldUserId, userService.convertToUser(userDto));
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user, @PathVariable("id") Long id) {
+        userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

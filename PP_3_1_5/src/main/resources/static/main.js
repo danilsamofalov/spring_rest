@@ -206,7 +206,7 @@ async function editUser() {
     for (let i = 0; i < form_ed.rolesForEditing.options.length; i++) {
         if (form_ed.rolesForEditing.options[i].selected) {
             listOfRole.push({id: form_ed.rolesForEditing.options[i].value,
-            role: form_ed.rolesForEditing.options[i].text});
+            name: form_ed.rolesForEditing.options[i].text});
         }
     }
     let method = {
@@ -215,6 +215,7 @@ async function editUser() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+            id: form_ed.editedUserId.value,
             firstName: form_ed.firstName.value,
             lastName: form_ed.lastName.value,
             age: form_ed.age.value,

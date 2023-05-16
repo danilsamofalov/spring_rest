@@ -150,6 +150,13 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + username + '\'' +
+                ", role=" + roles +
+                '}';
     }
 }
