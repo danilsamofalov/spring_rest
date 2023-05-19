@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +43,7 @@ public class AdminController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/users/{id}")
+    @PutMapping(value = "/users/{id}")
     public ResponseEntity<HttpStatus> updateUser(@RequestBody User user, @PathVariable("id") Long id) {
         userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
