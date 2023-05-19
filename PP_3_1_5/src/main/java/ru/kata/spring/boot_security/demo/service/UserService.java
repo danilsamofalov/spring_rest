@@ -17,7 +17,5 @@ public interface UserService {
 
     void updateUser(User user);
 
-    User findByUsername(String username);
-
     User convertToUser(UserDto userDto);
 }

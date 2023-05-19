@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+import ru.kata.spring.boot_security.demo.service.LoadUserSecurity;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.Collections;
@@ -24,12 +25,13 @@ import java.util.Collections;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
-    private final UserService userService;
+    private final LoadUserSecurity loadUserSecurity;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService userService) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService userService,
+                             LoadUserSecurity loadUserSecurity) {
 
         this.successUserHandler = successUserHandler;
-        this.userService = userService;
+        this.loadUserSecurity = loadUserSecurity;
     }
 
     @Bean
@@ -72,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
         daoProvider.setPasswordEncoder(passwordEncoder());
-        daoProvider.setUserDetailsService((UserDetailsService) userService);
+        daoProvider.setUserDetailsService(loadUserSecurity);
         return daoProvider;
     }
     @Bean
